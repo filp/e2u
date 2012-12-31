@@ -43,8 +43,8 @@ Or you can include the whole library:
 #include "e2u/lib/e2u"
 ```
 
-Including the whole library also includes some meta-programming tools
-to introspect the `e2u` library at runtime, which you may find useful.
+Including the whole library also includes some tools to introspect the
+`e2u` library at runtime, which you may find useful.
 
 
 ## Contributing:
@@ -57,6 +57,9 @@ these guidelines before contributing:
 
 * Before adding a new component, be sure it's actually useful in
   a variety of situations.
+* All top-level symbols (including anything that goes in @persist) must
+  be prefixed with E2u_<component-identifier>, unless there's a very
+  good reason otherwise.
 * Follow the coding style used through-out the rest of the library
 * If you add a new component or make any significant changes, make
   sure that, if possible, it's covered by a test in `tests/`.
