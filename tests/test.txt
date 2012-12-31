@@ -1,0 +1,40 @@
+# Test toolchain for the e2u tests suite
+# @author github.com/filp
+@name e2u/tests/test
+@persist [E2u_Test_Tests E2u_Test_Options]:table
+
+if(first()) {
+
+    # Should test execution bail out on the first failure?
+    function number e2u_test_setOptions(Options:table) {
+        E2u_Test_Options = E2u_Test_Options:merge(Options)
+    }
+
+    # Declares a e2u unit test with a description and its result.
+    # The result should be given by including the test in-line, when possible:
+    #    e2u_test("Test that it returns bar",
+    #       myTestableFunction("foo") == "bar"
+    #    )
+    function number e2u_test(Description:string, Result:number) {
+        E2u_Test_Tests[Description, number] = Result
+
+        ResultString = (Result == 0 ? "PASS" : "FAIL")
+        ResultColor  = (Result == 0 ? vec(80, 200, 95) : vec(250, 30, 30))
+        WhiteColor   = vec(200, 200, 200)
+
+        printColor(
+            WhiteColor,  "e2u/tests/suite ~",
+            WhiteColor,  " [ ",
+            ResultColor, ResultString,
+            WhiteColor,  " ] \n  -> ",
+            WhiteColor,  Description + "\n"
+        )
+
+        if(E2u_Test_Options["exit-on-failure", number] && Result != 0) {
+            printColor(ResultColor, " ~ Quitting test suite due to test failure.")
+            exit()
+        }
+
+        return Result
+    }
+}

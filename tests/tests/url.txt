@@ -1,0 +1,28 @@
+# @author github.com/filp
+@name e2u/tests/tests/url
+
+if(first()) {
+    #include "e2u/lib/url"
+    function number e2u_url_runTests()
+    {
+        e2u_test(
+            "e2u_url_isValid returns 1 for a valid URL",
+            1 == e2u_url_isValid("http://www.google.com")
+        )
+
+        e2u_test(
+            "e2u_url_isValid returns 1 for a valid URL",
+            1 == e2u_url_isValid("http://wiremod.com/forums-123/hello?world=foo")
+        )
+
+        e2u_test(
+            "e2u_url_isValid returns 0 for a URL with no tld",
+            0 == e2u_url_isValid("http://foobar")
+        )
+
+        e2u_test(
+            "e2u_url_isValid returns 0 for a URL with no protocol",
+            0 == e2u_url_isValid("foobar.com/hi")
+        )
+    }
+}

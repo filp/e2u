@@ -1,0 +1,24 @@
+# Executes tests from the e2u test suite
+# @author github.com/filp
+@name e2u/tests/suite
+
+if(first()) {
+    # Setup the test toolchain:
+    #include "e2u/tests/test"
+    e2u_test_setOptions(table(
+        "exit-on-failure" = 0
+    ))
+    
+    # Include the libraries we're testing:
+    #include "e2u/tests/tests/url"
+
+
+    printColor(
+        vec(200, 200, 200),
+        "\n\n+ e2u test suite results:\n"
+    )
+
+    # Every testable library includes a method
+    # with the format e2u_<component>_runTests
+    e2u_url_runTests()
+}

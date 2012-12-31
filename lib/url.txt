@@ -1,0 +1,27 @@
+# Simple URL manipulation library
+# @author github.com/filp
+@name e2u/url
+
+if(first()) {
+    # *simplified* method to verify that a string is
+    # url-like. Note that it does not provide 100% ,
+    # certainty since there's a middle-ground to reach
+    # between accuracy and performance.
+    function number e2u_url_isValid(Input:string) {
+        local Pattern = "https?://[%w%.-]+%.%w[.]+"
+        return !!Input:matchFirst(Pattern)
+    }
+    
+    # Parses a url-like string and attempts to extract
+    # some common information about it.
+    function table e2u_url_getInfo(Input:string) {
+        local  Pattern  = "([A-z]+)://([%w%.-]*)/(.*)%?(.*)"
+        local  PartsRaw = Input:match(Pattern)
+        return table(
+            "scheme" = PartsRaw[1, string],
+            "domain" = PartsRaw[2, string],
+            "path"   = "/" + PartsRaw[3, string],
+            "query"  = "?" + PartsRaw[4, string]
+        )
+    }
+}
